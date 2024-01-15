@@ -1,0 +1,39 @@
+
+.wrapper {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    user-select: none;
+    // hover nuts mau nau
+    &:hover {
+        background-color: yellow !important;;
+    }
+    + .wrapper {
+        margin-left: 8px;
+    }
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.5ư     }
+}
+.text {
+    &:hover {
+        text-decoration: none;
+        color: var(--orange);
+    }    
+}
+//Button size
+.small {
+    min-width: 88px;
+    padding: 4px 16px;
+}
+
+.large {
+    min-width: 148px;
+    padding: 14px 16px;
+}
+//Icon và chữ, chữ và Icon
+.icon + .title,
+.title + .icon {
+    margin-left: 8px;
+}

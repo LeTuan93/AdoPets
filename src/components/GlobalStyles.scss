@@ -1,0 +1,44 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@500&display=swap');
+// import <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+@import url('https://kit.fontawesome.com/8ccde7bc23.js');
+// https://fonts.google.com/specimen/Roboto+Condensed
+
+:root {
+    --primary : #fe2c55;
+    --orange : #ff8c00;
+    --while : #fff;
+    //Default layout
+    --default-layout-header-content-width: 1320px; 
+}
+
+* {
+    margin :0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+}
+footer {
+    margin :0;
+    padding: 0;
+}
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+a[href] {
+    color: var(--text-color);
+    text-decoration: none;
+}
