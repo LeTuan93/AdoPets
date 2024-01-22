@@ -4,7 +4,7 @@ import axios from 'axios';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
-import * as searchServices from '~/apiServices/searchServices';
+import * as searchServices from '~/apiServices/Services';
 import request from '~/utils/request';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,7 +38,6 @@ function Search() {
             const filteredResults = result.filter((product) =>
                 product.product_name.toLowerCase().includes(debounced.toLowerCase()),
             );
-            console.log(filteredResults);
             // Cập nhật setSearchResult với kết quả lọc
             setSearchResult(filteredResults);
         };
@@ -49,48 +48,49 @@ function Search() {
         setShowResult(false);
     };
     return (
-        <Tippy
-            interactive={true} // cho phép chọn vào các mục được tìm kiếm
-            placement="bottom"
-            visible={showResult && searchResult.length > 0}
-            render={(attrs) => (
-                <div className={cx('search__result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <h4 className={cx('search__title')}>Hint</h4>
-                        <div className={cx('Items')}>
-                            {searchResult.map((result) => (
-                                <ItemSearch key={result.id} data={result} />
-                            ))}
-                        </div>
-                    </PopperWrapper>
-                </div>
-            )}
-            onClickOutside={handleHideResult}
-        >
-            <div className={cx('search_bar')}>
-                <input
-                    ref={inputRef} // focus  lại ô input sau khi ấn tìm kiếm
-                    value={searchValue}
-                    className={cx('search_bar_input')}
-                    onChange={(e) => {
-                        if(!searchValue.startsWith(' ')) {
-                            setSearchValue(e.target.value);
-                        }
-                    }}
-                    onFocus={() => setShowResult(true)}
-                />
-                {!!searchValue && (
-                    <button
-                        className={cx('search_bar_button')}
-                        onClick={() => {
-                            handleClear();
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </button>
+        //bọc thẻ div để không bị warning khi sử dụng tippy
+        <div>
+            <Tippy
+                interactive={true} // cho phép chọn vào các mục được tìm kiếm
+                placement="bottom"
+                visible={showResult && searchResult.length > 0}
+                render={(attrs) => (
+                    <div className={cx('search__result')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper>
+                            <h4 className={cx('search__title')}>Hint</h4>
+                            <div className={cx('Items')}>
+                                {searchResult.map((result) => (
+                                    <ItemSearch key={result.id} data={result} />
+                                ))}
+                            </div>
+                        </PopperWrapper>
+                    </div>
                 )}
-            </div>
-        </Tippy>
+                onClickOutside={handleHideResult}
+            >
+                <div className={cx('search_bar')}>
+                    <input
+                        ref={inputRef} // focus  lại ô input sau khi ấn tìm kiếm
+                        value={searchValue}
+                        className={cx('search_bar_input')}
+                        onChange={(e) => {
+                                setSearchValue(e.target.value);
+                        }}
+                        onFocus={() => setShowResult(true)}
+                    />
+                    {!!searchValue && (
+                        <button
+                            className={cx('search_bar_button')}
+                            onClick={() => {
+                                handleClear();
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        </button>
+                    )}
+                </div>
+            </Tippy>
+        </div>
     );
 }
 

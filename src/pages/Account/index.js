@@ -1,5 +1,11 @@
+import React, { useState } from 'react';
+
 function Account() {
-    return <h2>Account Pages</h2>
+    return (
+        <div>
+            <h2>Account Pages</h2>
+        </div>
+    );
 }
 
 export default Account;

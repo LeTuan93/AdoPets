@@ -1,23 +1,21 @@
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faEnvelope,
-    faPhone,
-    faArrowRightFromBracket,
-    faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPhone, faArrowRightFromBracket, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-import routesConfig from "~/config/routes";
+import statusLogin from '~/components/FormLogin/statusLogin';
+import { useState , useEffect} from 'react';
+import FormLogin from '~/components/FormLogin';
+import routesConfig from '~/config/routes';
 import Button from '~/components/Button';
 import Tippy from '@tippyjs/react/headless';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import ItemSearch from '../ItemSearch';
 import Menu from '~/components/Popper/Menu';
 import MenuItem from '~/components/Popper/Menu/MenuItem';
-import {Globe, Moon} from '~/components/Icons';
+import { Globe, Moon } from '~/components/Icons';
 import Search from '../Search';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const MENU_ITEMS = [
@@ -39,11 +37,33 @@ const MENU_ITEMS = [
     },
 ];
 
-function Header() {
+function Header({ onStatusChange }) {
+
+    //Hàm xử lý khi bấm vào item trong menu ở thanh tìm kiếm
     const handleMenuChange = (menuItem) => {
         console.log(menuItem);
     };
-    const currentUser = false;
+    const [currentUser, setCurrentUser] = useState(statusLogin());
+    const [showPopup, setShowPopup] = useState(false);
+    //Mở cửa sổ đăng nhập
+    const handleLogin = () => {
+        setShowPopup(true);
+    };
+
+    //Đóng cửa sổ dăng nhập
+    const closePopup = () => {
+        if (statusLogin()==true){
+            setCurrentUser(true);
+            onStatusChange(statusLogin()); // khi đăng nhập thì sẽ thay đổi cấc body trong defaultLayout (truyền từ header lên defaultLayout rồi tới App)
+        }
+        setShowPopup(false);
+
+    };
+    const handleLogOut = () => {
+        sessionStorage.removeItem('loginToken');
+        onStatusChange(statusLogin());
+        setCurrentUser(false);
+    }
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner__top')}>
@@ -71,8 +91,11 @@ function Header() {
                             <Moon />
                         </div>
                         <div className={cx('auth')}>
-                            <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                            <Button  onClick={handleLogOut}>
+                                <FontAwesomeIcon icon={faPhone} />
+                            </Button>
                         </div>
+
                     </div>
                 ) : (
                     <div className={cx('inner__top__right')}>
@@ -86,12 +109,23 @@ function Header() {
                         <div className={cx('theme')}>
                             <Moon />
                         </div>
+                        <div className={cx('auth')}>
+                            <Button onClick={handleLogin}>
+                                <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                            </Button>
+                        </div>
                     </div>
                 )}
             </div>
             <div className={cx('inner__body')}>
                 <div className={cx('inner__body_wrapper')}>
-                    <Link to= {routesConfig.home} ><img className={cx('logo__link')} src ="http://103.252.95.181:8000/media/photos/logos/logofull.png" alt="AdoPets"/></Link>
+                    <Link to={routesConfig.home}>
+                        <img
+                            className={cx('logo__link')}
+                            src="http://103.252.95.181:8000/media/photos/logos/logofull.png"
+                            alt="AdoPets"
+                        />
+                    </Link>
                     <Search />
                     <div>Cart</div>
                 </div>
@@ -123,6 +157,7 @@ function Header() {
                     </a>
                 </li>
             </ul>
+            {showPopup &&  <FormLogin onClose={closePopup}  /> }
         </header>
     );
 }

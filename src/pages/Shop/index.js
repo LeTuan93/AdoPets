@@ -1,10 +1,14 @@
 import styles from './Shop.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as searchServices from '~/apiServices/Services';
+import { useState, useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Shop() {
+
+
     return (
         <shop className={cx('wrapper')}>
             <div className={cx('product__list__sort')}>
@@ -19,7 +23,8 @@ function Shop() {
                     <option className={cx('option-sort-product')}>Price: High to Low</option>
                 </select>
             </div>
-            <div className={cx('product__list')}></div>
+            <div className={cx('product__list')}>
+            </div>
             <div className={cx('product__list__page')}></div>
         </shop>
     );

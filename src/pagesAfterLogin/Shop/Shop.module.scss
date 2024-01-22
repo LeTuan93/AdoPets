@@ -1,0 +1,17 @@
+.product-list {
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.item {
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+    transition: all .5s;
+}
+.item__content {
+    background-color: #fff;
+    border-bottom-left-radius: .5em;
+    border-bottom-right-radius: .5em;
+    padding: 1rem;
+}

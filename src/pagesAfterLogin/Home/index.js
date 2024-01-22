@@ -1,7 +1,7 @@
-function Home() {
+function HomeAfter() {
     return (
         <div>
-            <h2> Home pages</h2>
+            <h2> Home pages after login</h2>
             <p> Home page</p>
             <p> Home page</p>
             <p> Home page</p>
@@ -17,4 +17,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default HomeAfter;

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 function ItemSearch({ data }) {
     return (
-        <Link  to={"/:"+data.id} className={cx('wrapper')} >
+        <Link  to={"/"+data.id} className={cx('wrapper')} >
             <Image 
                 className={cx('avatar')} 
                 src={"http://103.252.95.181:8000"+data.images} 

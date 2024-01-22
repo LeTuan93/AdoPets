@@ -30,7 +30,9 @@ function Menu({ children, items = [], onChange = defaultFn }) {
             placement="bottom-end"
             render={(attrs) => (
                 <div className={cx('menu_list')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>{renderItems()}</PopperWrapper>
+                    <PopperWrapper>
+                        <div >{renderItems()}</div>
+                    </PopperWrapper>
                 </div>
             )}
         >
